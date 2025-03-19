@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-api-gateway
+  labels:
+    app: bookstore-api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookstore-api-gateway
+  template:
+    metadata:
+      labels:
+        app: bookstore-api-gateway
+    spec:
+      containers:
+        - name: bookstore-api-gateway
+          image: registry.gitlab.com/baptiste.bronsin/knative/api-gateway:0.0.7
+          ports:
+            - containerPort: 8080
+          command: ["go", "run", "main.go"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookstore-api-gateway-svc
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: bookstore-api-gateway
+  type: LoadBalancer

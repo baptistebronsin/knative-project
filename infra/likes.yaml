@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-api-likes
+  labels:
+    app: bookstore-api-likes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookstore-api-likes
+  template:
+    metadata:
+      labels:
+        app: bookstore-api-likes
+    spec:
+      containers:
+        - name: bookstore-api-likes
+          image: registry.gitlab.com/baptiste.bronsin/knative/likes:0.0.1
+          ports:
+            - containerPort: 8080
+          command: ["go", "run", "main.go"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookstore-api-likes-svc
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: bookstore-api-likes
+  type: NodePort

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-api-comments
+  labels:
+    app: bookstore-api-comments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookstore-api-comments
+  template:
+    metadata:
+      labels:
+        app: bookstore-api-comments
+    spec:
+      containers:
+        - name: bookstore-api-comments
+          image: registry.gitlab.com/baptiste.bronsin/knative/comments:0.0.6
+          ports:
+            - containerPort: 8080
+          command: ["go", "run", "main.go"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookstore-api-comments-svc
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: bookstore-api-comments
+  type: NodePort

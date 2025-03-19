@@ -1,0 +1,69 @@
+networks:
+  knative-network:
+
+services:
+  frontend:
+    image: knative-group/frontend
+    container_name: knative-group-frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./frontend
+          target: /app
+    networks:
+      - knative-network
+
+  api-gateway:
+    image: registry.gitlab.com/baptiste.bronsin/knative/api-gateway:0.0.2
+    container_name: knative-group-api-gateway
+    build:
+      context: ./server/api-gateway
+      dockerfile: ./Dockerfile
+    command: go run main.go
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./server/api-gateway
+          target: /app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    networks:
+      - knative-network
+
+  bookstore-api-comments-svc:
+    image: registry.gitlab.com/baptiste.bronsin/knative/comments:0.0.1
+    container_name: knative-group-comments
+    build:
+      context: ./server/comments
+      dockerfile: ./Dockerfile
+    command: go run main.go
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./server/comments
+          target: /app
+    restart: unless-stopped
+    networks:
+      - knative-network
+  
+  bookstore-api-likes-svc:
+    image: registry.gitlab.com/baptiste.bronsin/knative/likes:0.0.1
+    container_name: knative-group-likes
+    build:
+      context: ./server/likes
+      dockerfile: ./Dockerfile
+    command: go run main.go
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./server/likes
+          target: /app
+    restart: unless-stopped
+    networks:
+      - knative-network
