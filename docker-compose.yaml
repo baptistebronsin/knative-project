@@ -19,7 +19,7 @@ services:
       - knative-network
 
   api-gateway:
-    image: registry.gitlab.com/baptiste.bronsin/knative/api-gateway:0.0.2
+    image: knative-group/api-gateway
     container_name: knative-group-api-gateway
     build:
       context: ./server/api-gateway
@@ -37,7 +37,7 @@ services:
       - knative-network
 
   bookstore-api-comments-svc:
-    image: registry.gitlab.com/baptiste.bronsin/knative/comments:0.0.1
+    image: knative-group/comments
     container_name: knative-group-comments
     build:
       context: ./server/comments
@@ -53,7 +53,7 @@ services:
       - knative-network
   
   bookstore-api-likes-svc:
-    image: registry.gitlab.com/baptiste.bronsin/knative/likes:0.0.1
+    image: knative-group/likes
     container_name: knative-group-likes
     build:
       context: ./server/likes

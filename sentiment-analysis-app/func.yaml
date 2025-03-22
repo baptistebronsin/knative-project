@@ -2,10 +2,11 @@ specVersion: 0.36.0
 name: sentiment-analysis-app
 runtime: python
 registry: registry.gitlab.com/baptiste.bronsin/knative
+image: registry.gitlab.com/baptiste.bronsin/knative/sentiment-analysis-app:latest
 namespace: default
 created: 2025-03-16T18:11:02.795123811+01:00
 build:
   builder: s2i
 deploy:
   namespace: default
-  image: registry.gitlab.com/baptiste.bronsin/knative/sentiment-analysis-app@sha256:1772f6a4e79e6ba8db9fb6df3ccc2110e812d2af2379c520b074a7845aa15509
+  image: registry.gitlab.com/baptiste.bronsin/knative/sentiment-analysis-app:latest

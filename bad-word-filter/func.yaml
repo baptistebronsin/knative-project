@@ -2,10 +2,11 @@ specVersion: 0.36.0
 name: bad-word-filter
 runtime: python
 registry: registry.gitlab.com/baptiste.bronsin/knative
+image: registry.gitlab.com/baptiste.bronsin/knative/bad-word-filter:latest
 namespace: default
 created: 2025-03-17T08:29:11.364065523+01:00
 build:
   builder: s2i
 deploy:
   namespace: default
-  image: registry.gitlab.com/baptiste.bronsin/knative/bad-word-filter@sha256:302e6d3261b231555d830b36556a3a4b001747ead340cf1f651274550020f7eb
+  image: registry.gitlab.com/baptiste.bronsin/knative/bad-word-filter:latest
